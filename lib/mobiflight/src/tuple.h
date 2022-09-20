@@ -41,5 +41,17 @@ namespace mobiflight
     typename enable_if<i != position, Rest &...>::type get(tuple<T, Rest...> &the_tuple)
     {
         return get<i, position + 1>(the_tuple.rest);
-    };
+    }
+
+    template <typename Desired, typename T, typename... Rest>
+    typename enable_if<is_same<Desired, T>::value, T &>::type get(tuple<T, Rest...> &the_tuple)
+    {
+        return the_tuple.cur;
+    }
+
+    template <typename Desired, typename T, typename... Rest>
+    typename enable_if<!is_same<Desired, T>::value, Rest &...>::type get(tuple<T, Rest...> &the_tuple)
+    {
+        return get<Desired>(the_tuple.rest);
+    }
 };

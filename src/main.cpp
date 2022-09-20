@@ -1,5 +1,6 @@
 #include <mobiflight.h>
-#include "button.h"
+#include <buttons.h>
+
 struct Config {
 };
 
@@ -9,7 +10,7 @@ struct Config {
 CmdMessenger messenger(Serial);
 Config       config;
 
-mobiflight::MobiFlight<CmdMessenger, Config, mobiflight::Buttons<5>> mf(config, messenger);
+mobiflight::MobiFlight<CmdMessenger, Config, mobiflight::devices::Buttons<5>> mf(config, messenger);
 
 void setup()
 {
@@ -23,16 +24,23 @@ void loop()
 
 #else
 #include <thread>
+#include <iostream>
 #include <chrono>
 struct CmdMessenger {
 };
 
 int main(int argc, char **argv)
 {
-    Config                                                               conf;
-    CmdMessenger                                                         msg;
-    mobiflight::MobiFlight<CmdMessenger, Config, mobiflight::Buttons<5>> mf(conf, msg);
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::cout << "hello " << std::endl;
+    using PiButtons = mobiflight::devices::Buttons<5>;
+    Config                                                  conf;
+    CmdMessenger                                            msg;
+    mobiflight::MobiFlight<CmdMessenger, Config, PiButtons> mf(conf, msg);
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        mf.update();
+        mf.get_module<PiButtons>().update();
+    }
 }
 
 #endif

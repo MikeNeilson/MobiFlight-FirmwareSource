@@ -5,7 +5,6 @@
 #endif
 
 #include "tuple.h"
-#include "button.h"
 
 namespace mobiflight
 {
@@ -45,6 +44,12 @@ namespace mobiflight
         void update()
         {
             update_modules(modules);
+        }
+
+        template <typename T>
+        T &get_module()
+        {
+            return get<T>(modules);
         }
     };
 };
