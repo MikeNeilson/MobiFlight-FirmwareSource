@@ -4,7 +4,7 @@ namespace mobiflight
 {
     namespace devices
     {
-        enum {
+        enum device_type {
             kTypeNotSet,              // 0
             kTypeButton,              // 1
             kTypeEncoderSingleDetent, // 2 (retained for backwards compatibility, use kTypeEncoder for new configs)
@@ -20,6 +20,11 @@ namespace mobiflight
             kTypeInputShifter,        // 12 Input shift register support (example: 74HC165)
             kTypeMuxDriver,           // 13 Multiplexer selector support (generates select outputs)
             kTypeDigInMux,            // 14 Digital input multiplexer support (example: 74HCT4067, 74HCT4051)
+        };
+
+        enum pin_state {
+            LOW,
+            HIGH
         };
     }
 }

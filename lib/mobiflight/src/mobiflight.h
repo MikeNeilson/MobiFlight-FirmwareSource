@@ -4,23 +4,26 @@
 #include <Arduino.h>
 #endif
 
+#include "meta_lib.h"
 #include "tuple.h"
+#include "devices.h"
+#include "buttons.h"
 
 namespace mobiflight
 {
 
-    template <size_t i = 0, typename T>
+    template <size_t i = 0, typename T, typename Messenger>
     typename enable_if<i == tuple_size<T>::size, void>::type
-    update_modules(T &modules)
+    update_modules(T &modules, Messenger &messenger)
     {
     }
 
-    template <size_t i = 0, typename T>
+    template <size_t i = 0, typename T, typename Messenger>
     typename enable_if<i != tuple_size<T>::size, void>::type
-    update_modules(T &modules)
+    update_modules(T &modules, Messenger &messenger)
     {
-        get<i>(modules).update();
-        update_modules<i + 1>(modules);
+        get<i>(modules).update(messenger);
+        update_modules<i + 1>(modules, messenger);
     }
 
     template <class Messenger, class Config, class... Modules>
@@ -43,7 +46,7 @@ namespace mobiflight
         }
         void update()
         {
-            update_modules(modules);
+            update_modules(modules, messenger);
         }
 
         template <typename T>

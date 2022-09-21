@@ -10,22 +10,37 @@ namespace mobiflight
         T elements[max];
 
     public:
+        /*
+        array()
+        {
+            for (size_t i = 0; i < max; i++) {
+                elements[i] = nullptr;
+            }
+        }
+        ~array()
+        {
+            for (size_t i = 0; i < max; i++) {
+                delete element[i];
+            }
+        }*/
+
         T &operator[](const size_t index) noexcept
         {
             if (index < max) {
                 return elements[index];
-            } else {
-                return nullptr;
-            }
+            } /*else {
+                throw "access beyond array";
+            }*/
         }
 
-        const T &operator[](const size_t &index) noexcept
+        const T &operator[](const size_t &index) const noexcept
         {
             if (index < max) {
                 return elements[index];
-            } else {
-                return nullptr;
-            }
+            } /*else {
+                throw "access beyond array";
+            }*/
         }
     };
+
 }
