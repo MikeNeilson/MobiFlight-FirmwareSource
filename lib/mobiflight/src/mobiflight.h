@@ -1,9 +1,5 @@
 #pragma once
 
-#ifdef ARDUINO
-#include <Arduino.h>
-#endif
-
 #include "meta_lib.h"
 #include "tuple.h"
 #include "devices.h"
@@ -26,7 +22,7 @@ namespace mobiflight
         update_modules<i + 1>(modules, messenger);
     }
 
-    template <class Messenger, class Config, class... Modules>
+    template <class Messenger, class... Modules>
     class MobiFlight
     {
     private:
@@ -36,11 +32,11 @@ namespace mobiflight
         Messenger &messenger;
 
     public:
-        MobiFlight(const Config &config, Messenger &messenger)
+        MobiFlight(Messenger &messenger)
             : messenger(messenger)
         {
         }
-        MobiFlight(const Config &config, Messenger &messenger, Modules &...modules)
+        MobiFlight(Messenger &messenger, Modules &...modules)
             : messenger(messenger), modules(modules...)
         {
         }
@@ -54,5 +50,9 @@ namespace mobiflight
         {
             return get<T>(modules);
         }
+
+        /* events */
+        template <typename EventType, typename Event>
+        void send(Event &event);
     };
 };

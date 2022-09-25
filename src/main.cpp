@@ -1,35 +1,21 @@
 
-
-struct Config {
-};
-
 #ifdef ARDUINO
 #include <mobiflight.h>
-#include <button.h>
+#include <arduino_io.H>
 
 using namespace mobiflight;
 
-struct Messenger {
-    Stream &comm;
+CmdMessenger cm(Serial);
+Messenger    messenger(cm);
+Config       config;
 
-    Messenger(Stream &comm)
-        : comm(comm) {}
+using MFTYPE = MobiFlight<Messenger, devices::Buttons<5, devices::Button>>;
 
-    void send(mobiflight::devices::button_event &&event)
-    {
-        Serial.println("Button event");
-    }
-};
-
-#include <CmdMessenger.h>
-
-Messenger messenger(Serial);
-Config    config;
-
-MobiFlight<Messenger, Config, devices::Buttons<5, devices::Button>> mf(config, messenger);
+MFTYPE mf(config, messenger);
 
 void setup()
 {
+    Serial.begin(115200);
 }
 
 void loop()

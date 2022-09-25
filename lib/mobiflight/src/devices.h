@@ -21,10 +21,16 @@ namespace mobiflight
             kTypeMuxDriver,           // 13 Multiplexer selector support (generates select outputs)
             kTypeDigInMux,            // 14 Digital input multiplexer support (example: 74HCT4067, 74HCT4051)
         };
-
+#ifdef ARDUINO
+        enum pin_state {
+            low  = LOW,
+            high = HIGH,
+        };
+#else
         enum pin_state {
             LOW,
             HIGH
         };
+#endif
     }
 }

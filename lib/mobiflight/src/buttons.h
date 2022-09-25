@@ -2,7 +2,6 @@
 #include "meta_lib.h"
 #include "array.h"
 #include "devices.h"
-#include <iostream>
 
 namespace mobiflight
 {
@@ -21,7 +20,6 @@ namespace mobiflight
                 if (last + 1 == MAX) return;
                 last++;
                 buttons[last] = button;
-                std::cout << " button added" << std::endl;
             }
 
             template <typename Director>

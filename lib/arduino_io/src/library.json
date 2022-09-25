@@ -1,4 +1,10 @@
 {
-    "platforms": "*",
-    "frameworks": "arduino"
+    "platforms": "atmelavr",
+    "frameworks": "arduino",
+    "lib": {
+        "deps": [
+            "EEPROM",
+            "mobiflight"
+        ]
+    }
 }
